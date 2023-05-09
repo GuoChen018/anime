@@ -1,0 +1,195 @@
+//bem - block-element-modifier
+
+@layer config {
+  :root {
+    
+    * {
+      margin: 0;
+      // outline: solid 1px tomato;
+    }
+
+    --font-size-primary: clamp(100%, 85% + 0.5vi, 120%);
+    --stack: 0.5em;
+    --stack: clamp(1.5ex, 3vmax, 2ex); //vertical spacing (related to x-height of the font - also affects font-size)
+    --stack-list: clamp(2ex, 4vmax, 3ex);
+    --section-spacing: 2em;
+    --font: 'Rubik', sans-serif;
+    --font-weight-regular: 400; 
+    --font-weight-semibold: 600;
+    --leading: 1.6; 
+
+    --border-radius: 0.5em;
+    --row-spacing: 2em;
+    --column-spacing: 0.75em;
+    --line-length: 50ch;
+
+    --color-primary: #171717;
+    --color-secondary: #767676; 
+  }
+}
+
+@layer spacing {
+
+  body {
+    padding-inline: 1em;
+  }
+
+  main, nav, footer{
+    max-inline-size: var(--line-length);
+    margin-inline: auto;
+  }
+
+  header{
+    margin-block-start: 1em; 
+     
+    >img {
+      display: block;
+      margin-inline: auto;
+    }
+    
+    >h1 {
+      max-inline-size: 23.3ch;
+      margin-inline: auto;
+    }
+  }
+
+  @media screen and (max-width: 980px) {
+    header img {
+      width: 100%;
+    }
+  }
+
+  nav{
+    margin-block-start: var(--section-spacing);
+  }
+
+  footer {
+    margin-block: var(--section-spacing);
+  }
+
+  section {
+    margin-bottom: 3rem;
+  }
+
+  h1 {
+    margin: 1.5rem 0 .5rem;    
+  }
+
+  h2, h3 {
+    margin-block-start: var(--section-spacing);
+  }
+  
+  p, ol{
+    margin-block-start: var(--stack);
+  }
+
+  .top img {
+    margin-block-start: var(--stack);
+  }
+
+}
+
+@layer typography {
+  :root {
+    //when setting font-size in root, always set in % so will work with default font size
+    font-size: var(--font-size-primary);
+    font-family: var(--font);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-primary);
+    line-height: var(--leading);
+    color-scheme: dark light;
+  }
+
+  blockquote {
+    margin-block: var(--stack);
+    padding: 1em;
+    border-left: 4px solid #ccc;
+    font-style: italic;
+  }
+
+  figcaption {
+    font-size: 0.8em;
+    text-align: center;
+    color: var(--color-secondary);
+  }
+}
+
+@layer list {
+  ul {
+    list-style-type: none; 
+    display: grid; 
+    grid-template-columns: 1fr 1fr;
+    row-gap: var(--row-spacing);
+    column-gap: var(--column-spacing);
+    padding: 0;
+    margin-block-start: var(--stack-list);
+  }
+  ul li { 
+    // outline: 1px solid tomato;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    column-gap: var(--column-spacing);
+  }
+
+  ul p {
+    margin: 0;
+  }
+
+  img {
+    border-radius: var(--border-radius);
+  }
+
+  @media screen and (max-width: 560px) {
+    ul {
+      grid-template-columns: 1fr;
+    }
+
+    ul img {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
+
+@layer links {
+  a {
+    color: #171717;
+    text-decoration-color: var(--color-secondary);
+    
+    &:hover {
+      color: #0070f3;
+      text-decoration: underline;
+      text-decoration-color: #0070f3;
+    }
+  }
+  
+  .skip-link {
+    position: absolute;
+    top: -60px;
+    left: 0;
+    background: #171717;
+    color: white;
+    padding: 8px;
+    z-index: 100;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+}
+
+@layer resets { 
+  // make sure the font is rendered as it was created 
+
+  *,
+  *::before,
+  *::after {
+    font-feature-settings: "kern";
+    font-kerning: normal;
+    -moz-osx-font-smoothing: grayscale !important;
+    -webkit-font-smoothing: antialiased !important;
+    box-sizing: border-box; //when defining width & height of a container, consider the border-width 
+  }
+}
+
